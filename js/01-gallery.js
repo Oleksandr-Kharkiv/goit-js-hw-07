@@ -28,8 +28,11 @@ function getUrlBigPhoto(event) {
     <img src="${urlImgOriginalSize}" width="800" height="600">
 `)
 instance.show()
-galleryEl.addEventListener('keydown', (event) => {
+window.addEventListener('keydown', (event) => {
+  console.log(event);
   if(event.code === "Escape") {
     instance.close()
-}})
+    return
+  }
+})
 }
