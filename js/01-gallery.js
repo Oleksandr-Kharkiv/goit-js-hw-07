@@ -1,6 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-// console.log(galleryItems);
+console.log(galleryItems);
 const galleryEl = document.querySelector('.gallery');
 
 const markup = galleryItems
@@ -14,18 +14,22 @@ const markup = galleryItems
         </div>`).join("");
 
 galleryEl.insertAdjacentHTML("beforeend", markup);
-console.log(galleryEl);
 
 galleryEl.addEventListener('click', getUrlBigPhoto);
 
 function getUrlBigPhoto(event) {
   event.preventDefault();
+  if(event.target.nodeName !== "IMG"){
+    return
+  }
   const urlImgOriginalSize = event.target.dataset.source;
-  console.log(urlImgOriginalSize)
-
-const instance = basicLightbox.create(`
+  
+  const instance = basicLightbox.create(`
     <img src="${urlImgOriginalSize}" width="800" height="600">
 `)
 instance.show()
+galleryEl.addEventListener('keydown', (event) => {
+  if(event.code === "Escape") {
+    instance.close()
+}})
 }
-
