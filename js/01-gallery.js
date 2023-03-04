@@ -15,24 +15,25 @@ const markup = galleryItems
 
 galleryEl.insertAdjacentHTML("beforeend", markup);
 
-galleryEl.addEventListener('click', getUrlBigPhoto);
+galleryEl.addEventListener('click', handleModalOpen);
 
-function getUrlBigPhoto(event) {
+function handleModalOpen(event) {
   event.preventDefault();
   if(event.target.nodeName !== "IMG"){
     return
   }
-  const urlImgOriginalSize = event.target.dataset.source;
-  
-  const instance = basicLightbox.create(`
-    <img src="${urlImgOriginalSize}" width="800" height="600">
-`)
-instance.show()
-window.addEventListener('keydown', (event) => {
+const instance = basicLightbox.create(`
+    <img src="${event.target.dataset.source}" width="800" height="600">
+`);
+instance.show();
+
+window.addEventListener('keydown', handleModalEscClose);
+
+function handleModalEscClose(event) {
   console.log(event);
   if(event.code === "Escape") {
-    instance.close()
-    return
+    instance.close();
+    window.removeEventListener('keydown', handleModalEscClose)
+    } 
   }
-})
 }
